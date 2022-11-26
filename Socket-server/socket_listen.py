@@ -10,7 +10,7 @@ class SocketListen(threading.Thread):
     def __init__(self, socket: socket.socket, observerMessage: MessageObserver):
         self.socket = socket
         self.lock = threading.Lock()
-        self.observerMessage = observerMessage     
+        self.observerMessage = observerMessage   
         threading.Thread.__init__(self)
 
     def run(self):

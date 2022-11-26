@@ -16,16 +16,20 @@ class SocketMessage(threading.Thread):
         self.action = {
             TypeMessage.CONNECT: lambda chatMessage: messageObserver.notifyListernersToUserConnect(chatMessage),
             TypeMessage.MESSAGE: lambda chatMessage: messageObserver.notifyListenersToMessage(chatMessage),
-            TypeMessage.DISCONNECT: lambda chatMessage: messageObserver.notifyListernersToUserDisconnect(chatMessage)
+            TypeMessage.DISCONNECT: lambda chatMessage: messageObserver.notifyListernersToUserDisconnect(
+                chatMessage)
         }
         self.observerMessage = observerMessage
-        threading.Thread.__init__(self)       
+        threading.Thread.__init__(self)
 
     def run(self):
-        data = self.listen.recv(4096)
-        self.lock
-        chatMessage = pickle.loads(data)
-        chatMessage.user.address = self.address
-        chatMessage.user.listen = self.listen
-        self.action[chatMessage.typeMessage](chatMessage)
-        
+        while True: 
+            data = self.listen.recv(4096)
+            self.lock
+            chatMessage = pickle.loads(data)
+            chatMessage.user.address = self.address
+            chatMessage.user.listen = self.listen
+            self.action[chatMessage.typeMessage](chatMessage)
+            if(chatMessage.typeMessage == TypeMessage.DISCONNECT):
+                self.listen.close()            
+                break

@@ -6,3 +6,6 @@ class ChatMessage:
         self.user = user
         self.message = message
         self.typeMessage = typeMessage
+
+    def getMessage(self):
+        return ChatMessage(User(self.user.name, None, None), self.message, self.typeMessage)
