@@ -12,6 +12,6 @@ class SocketServer:
             newSocket.bind((self.host, self.port))
             newSocket.listen()            
             return newSocket
-        except  socket.error as msg:
+        except socket.error as msg:
             raise msg
             

@@ -13,5 +13,8 @@ def main():
     except Exception as e:
         print(e)
 
-
-main()
+if __name__ == "__main__":
+    print("Iniciando servidor...")
+    main()
+    if KeyboardInterrupt:
+        quit()

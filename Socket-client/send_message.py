@@ -15,15 +15,20 @@ class SendMessage(threading.Thread):
 
     def run(self):
         while True:
-            message = input()
-            
-            if(message == "EXIT"):
-                chatMessage = ChatMessage(
-                    self.user, f"{self.user.name} Saiu", TypeMessage.DISCONNECT)
+            try:
+                message = input()
+                
+                if(message == "EXIT"):
+                    chatMessage = ChatMessage(
+                        self.user, f"{self.user.name} Saiu", TypeMessage.DISCONNECT)
+                    data = pickle.dumps(chatMessage)
+                    self.socket.sendall(data)
+                    break;    
+                
+                chatMessage = ChatMessage(self.user, message, TypeMessage.MESSAGE)
                 data = pickle.dumps(chatMessage)
                 self.socket.sendall(data)
-                break;    
+            except EOFError:
+                print('Saiu do servidor.')
+                quit()
             
-            chatMessage = ChatMessage(self.user, message, TypeMessage.MESSAGE)
-            data = pickle.dumps(chatMessage)
-            self.socket.sendall(data)

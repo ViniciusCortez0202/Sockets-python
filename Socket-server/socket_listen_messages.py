@@ -23,13 +23,15 @@ class SocketMessage(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        while True: 
-            data = self.listen.recv(4096)
-            self.lock
-            chatMessage = pickle.loads(data)
-            chatMessage.user.address = self.address
-            chatMessage.user.listen = self.listen
-            self.action[chatMessage.typeMessage](chatMessage)
-            if(chatMessage.typeMessage == TypeMessage.DISCONNECT):
-                self.listen.close()            
-                break
+        while True:
+            try:
+                data = self.listen.recv(4096) 
+                self.lock
+                chatMessage = pickle.loads(data) 
+                chatMessage.user.address = self.address
+                chatMessage.user.listen = self.listen
+                self.action[chatMessage.typeMessage](chatMessage)
+            except ConnectionResetError:   
+                if(chatMessage.typeMessage == TypeMessage.DISCONNECT):
+                    self.listen.close()            
+                    break
