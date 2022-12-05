@@ -1,8 +1,6 @@
 # Atividade de Sockets em Python
 
- Como utilizar:
--
--
--
--
--
+ 1. Como utilizar
+- 
+- 
+- 
