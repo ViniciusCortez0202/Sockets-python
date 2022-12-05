@@ -1,1 +1,1 @@
-# Sockets-python
+# Atividade de Sockets em Python
